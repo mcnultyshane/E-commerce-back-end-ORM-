@@ -1,0 +1,20 @@
+{
+  "name": "E-commerce-back-end-ORM-",
+  "version": "1.0.0",
+  "description": "",
+  "main": "servers.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mcnultyshane/E-commerce-back-end-ORM-.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mcnultyshane/E-commerce-back-end-ORM-/issues"
+  },
+  "homepage": "https://github.com/mcnultyshane/E-commerce-back-end-ORM-#readme"
+}
