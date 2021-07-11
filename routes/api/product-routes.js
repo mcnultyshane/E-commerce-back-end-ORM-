@@ -9,9 +9,9 @@ router.get('/', async (req, res) => {
   try {
     const prodRouteData = await Product.findAll(req.body, {
       // be sure to include its associated Category and Tag data
-       include: [
-         { model: Category, through: ProductTag, as: "44", attributes: ['category_name'] }, 
-         { model: Tag, through: ProductTag, as: "77", attributes: ['tag_name'] }
+       include: [{model: Category}, {model: Tag}
+        //  { model: Category, through: ProductTag, as: "44" }, 
+        //  { model: Tag, through: ProductTag, as: "77" }
         ],
       //  ***********SQL LITERALS?***************
     });
@@ -25,9 +25,10 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   // find a single product by its `id`
   try {
-    const prodRouteData = await Product.findByPk(req.params.id, {
+    const prodRouteData = await Product.findByPk(req.params.id, { 
+      include: [{model: Category}, {model: Tag}]
        // be sure to include its associated Category and Tag data
-       include: [{ model: Category, through: ProductTag, as: "44" }, { model: Tag, through: ProductTag, as: "77" }]
+      //  include: [{ model: Category, through: ProductTag, as: "44" }, { model: Tag, through: ProductTag, as: "77" }]
       //  ************* SQL LITERALS??????**************
     });
 
