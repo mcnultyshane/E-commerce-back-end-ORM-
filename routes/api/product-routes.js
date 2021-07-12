@@ -4,12 +4,13 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 // The `/api/products` endpoint
 
 // get all products
+// *********.get works but I am not seeting any additional category or tag information.**********
 router.get('/', async (req, res) => {
   // find all products
   try {
-    const prodRouteData = await Product.findAll(req.body, {
+    const prodRouteData = await Product.findAll({
       // be sure to include its associated Category and Tag data
-       include: [{model: Category}, {model: Tag}
+       include: [Category, {model: Tag, through: ProductTag}
         //  { model: Category, through: ProductTag, as: "44" }, 
         //  { model: Tag, through: ProductTag, as: "77" }
         ],
@@ -22,11 +23,12 @@ router.get('/', async (req, res) => {
 });
 
 // get one product
+// ********** SequelizeEagerLoading Error ****************
 router.get('/:id', async (req, res) => {
   // find a single product by its `id`
   try {
     const prodRouteData = await Product.findByPk(req.params.id, { 
-      include: [{model: Category}, {model: Tag}]
+      include: [Category, {model: Tag, through: ProductTag}]
        // be sure to include its associated Category and Tag data
       //  include: [{ model: Category, through: ProductTag, as: "44" }, { model: Tag, through: ProductTag, as: "77" }]
       //  ************* SQL LITERALS??????**************
@@ -43,7 +45,8 @@ router.get('/:id', async (req, res) => {
 });
 
 // create new product
-router.post('/', async (req, res) => { 
+// ******* SyntaxError: Unexpected token p in JSON at position 12 -> at JSON.parse (<anonymous>)
+router.post('/', (req, res) => { 
   /* req.body should look like this...
     {
       product_name: "Basketball",
@@ -75,6 +78,7 @@ router.post('/', async (req, res) => {
 });
 
 // update product
+// ****** did work but just returned a '{}'}
 router.put('/:id', (req, res) => {
   // update product data
   Product.update(req.body, {
@@ -82,6 +86,7 @@ router.put('/:id', (req, res) => {
       id: req.params.id,
     },
   })
+    // eslint-disable-next-line no-unused-vars
     .then((product) => {
       // find all associated tags from ProductTag
       return ProductTag.findAll({ where: { product_id: req.params.id } });
@@ -116,8 +121,14 @@ router.put('/:id', (req, res) => {
     });
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   // delete one product by its `id` value
+  const deleteProduct = await Product.destroy({
+    where: {
+      id: req.params.id,
+    },
+  });
+  res.json(deleteProduct);
 });
 
 module.exports = router;

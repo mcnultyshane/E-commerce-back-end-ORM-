@@ -5,6 +5,7 @@ const Tag = require('./Tag');
 const ProductTag = require('./ProductTag');
 
 // Categories have many Products
+// ***** This works ********
 Category.hasMany(Product, {
   foreignKey: 'category_id',
   onDelete: 'CASCADE'
@@ -16,19 +17,14 @@ Product.belongsTo(Category, {
 });
 // Products belongToMany Tags (through ProductTag)
 Product.belongsToMany(Tag, {
-  through: {
-    model: ProductTag,
-    unique: false
-  },
-  as: 'product_tags'
+  through:ProductTag,
+  foreignKey: 'product_id'
+ 
 });
 // Tags belongToMany Products (through ProductTag)
 Tag.belongsToMany(Product, {
-  through: {
-    model: ProductTag,
-    unique: false
-  },
-  as: 'tags_for_products'
+  through:ProductTag,
+  foreignKey: 'tag_id'
 })
 //=============================================================
 // (Allow products to have multiple tags and tags to have many products by using the `ProductTag` through model.)
