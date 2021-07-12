@@ -6,14 +6,12 @@ const {
 } = require('../../models');
 
 // The `/api/tags` endpoint
-
 router.get('/', async (req, res) => {
   // find all tags
   try {
     const tagData = await Tag.findAll({
       include: [{ model: Product, through: ProductTag}]
       // be sure to include its associated Product data
-      // include: [{ model: Product, through: ProductTag, as: '55'}]
     });
     res.status(200).json(tagData);
   } catch (err) {
@@ -27,8 +25,6 @@ router.get('/:id', async (req, res) => {
     const tagData = await Tag.findByPk(req.params.id, {
       // be sure to include its associated Product data
       include: [{ model: Product, through: ProductTag}]
-      //  ************* SQL LITERALS??????**************
-      // ]
     });
 
     if (!tagData) {
@@ -53,7 +49,6 @@ router.post('/', async (req, res) => {
   }
 });
 
-// *********************************************
 router.put('/:id', async (req, res) => {
   // update a tag's name by its `id` value
   try {
@@ -75,8 +70,6 @@ router.put('/:id', async (req, res) => {
     res.status(500).json(err);
   }
 });
-// *********************************************
-
 router.delete('/:id', async (req, res) => {
   // delete on tag by its `id` value
   try {

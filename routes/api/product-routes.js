@@ -4,17 +4,12 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 // The `/api/products` endpoint
 
 // get all products
-// *********.get works but I am not seeting any additional category or tag information.**********
 router.get('/', async (req, res) => {
   // find all products
   try {
     const prodRouteData = await Product.findAll({
       // be sure to include its associated Category and Tag data
-       include: [Category, {model: Tag, through: ProductTag}
-        //  { model: Category, through: ProductTag, as: "44" }, 
-        //  { model: Tag, through: ProductTag, as: "77" }
-        ],
-      //  ***********SQL LITERALS?***************
+       include: [Category, {model: Tag, through: ProductTag}],
     });
     res.status(200).json(prodRouteData)
   } catch (err) {
@@ -23,15 +18,12 @@ router.get('/', async (req, res) => {
 });
 
 // get one product
-// ********** SequelizeEagerLoading Error ****************
 router.get('/:id', async (req, res) => {
   // find a single product by its `id`
   try {
     const prodRouteData = await Product.findByPk(req.params.id, { 
       include: [Category, {model: Tag, through: ProductTag}]
-       // be sure to include its associated Category and Tag data
-      //  include: [{ model: Category, through: ProductTag, as: "44" }, { model: Tag, through: ProductTag, as: "77" }]
-      //  ************* SQL LITERALS??????**************
+
     });
 
     if (!prodRouteData) {
@@ -44,8 +36,8 @@ router.get('/:id', async (req, res) => {
   } 
 });
 
+
 // create new product
-// ******* SyntaxError: Unexpected token p in JSON at position 12 -> at JSON.parse (<anonymous>)
 router.post('/', (req, res) => { 
   /* req.body should look like this...
     {
@@ -78,7 +70,6 @@ router.post('/', (req, res) => {
 });
 
 // update product
-// ****** did work but just returned a '{}'}
 router.put('/:id', (req, res) => {
   // update product data
   Product.update(req.body, {
