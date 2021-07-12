@@ -30,7 +30,7 @@ Run the following commands;
 `npm run seed`    
 `npm start`  
 
-A walk though video of the application and be viewed here: [Walkthough Video]()
+A walk though video of the application and be viewed in two parts, Part 1: [Walkthough Video](https://drive.google.com/file/d/1dXvHGgsKs5xGiAyKOgFq5HCFq9zaxgPq/view), & Part 2: [Walkthough Video](https://drive.google.com/file/d/1yhRmel5_Ib-fLO_l2QbXwvXNh1o-KPKg/view)
 
 ## Guidelines
 
